@@ -14,18 +14,20 @@ while(true)
     var client = server.AcceptTcpClient();
     Console.WriteLine("Client connected");
 
-    NetworkStream stream;
+    try { 
 
+        string request = client.MyRead();
 
+        Console.WriteLine($"Request: {request}");
 
-    string request = client.MyRead();
+        var response = request.ToUpper();
 
-    Console.WriteLine($"Request: {request}");
-
-    var response = request.ToUpper();
-
-    client.MyWrite(response);
-
+        client.MyWrite(response);
+    } 
+    catch
+    {
+        Console.WriteLine("Error reading from client");
+    }
 
 }
 
